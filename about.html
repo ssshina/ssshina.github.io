@@ -7,6 +7,7 @@
     <title>О нас</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -44,18 +45,46 @@
     <div class="container">
         <div class="row">
             <div class="col-6">
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
+                <!-- //action="http://vdubov.simtechdev.us/emailsend/public/send-mail"  -->
+                <!-- //method="get" -->
+                <form onsubmit="отправитьПисьмо(event)">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ваше имя</label>
+                        <input type="text" class="form-control" id="name" placeholder="введите имя" name="name">
+
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Тема сообщения</label>
+                        <input type="text" class="form-control" id="subject" placeholder="введите тему" name="subject">
+
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="messaget" class="form-label">Введите сообщение:</label>
+                        <input type="text" class="form-control" id="message" placeholder="ваше сообщение"
+                            name="message">
+
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Введите почту</label>
+                        <input type="email" class="form-control" id="email" placeholder="вашапочта@gmail.com"
+                            name="email">
+
+
+                    </div>
+                    <button type="submit" class="btn btn-info">Отправить</button>
+                </form>
+
+
+
             </div>
             <div class="col-6">
-                
-                <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A2b504118ecf335c40976bb3dfd35d43f92c2152c3e859956f0c83349ff0b479b&amp;width=100%25&amp;height=320&amp;lang=ru_RU&amp;scroll=true"></script>
+
+                <script type="text/javascript" charset="utf-8" async
+                    src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A2b504118ecf335c40976bb3dfd35d43f92c2152c3e859956f0c83349ff0b479b&amp;width=100%25&amp;height=320&amp;lang=ru_RU&amp;scroll=true">
+                </script>
 
             </div>
         </div>
@@ -78,6 +107,36 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
         integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous">
+    </script>
+
+    <script>
+        function отправитьПисьмо(event) {
+            event.preventDefault();
+
+            let name = document.querySelector('#name').value;
+            let subject = document.querySelector('#subject').value;
+            let message = document.querySelector('#message').value;
+            let email = document.querySelector('#email').value;
+
+            axios.get('http://vdubov.simtechdev.us/emailsend/public/send-mail', {
+                    params: {
+                        name: name,
+                        subject: subject,
+                        message: message,
+                        email: email,
+                    }
+                })
+                .then(function (response) {
+                    if (response.data.errors) {
+                        alert('YOU DIED Х_Х')
+                    } else {
+                        alert('все ок')
+                    }
+
+                })
+
+
+        }
     </script>
 </body>
 
